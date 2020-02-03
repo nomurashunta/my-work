@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>sample</title>
+    <meta charset="utf-8" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- Bootstrap-datepicker -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ja.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+
+<!--    <script type="text/javascript">-->
+<!--        $('.datepicker').datepicker();-->
+<!--</script>-->
+
+
+</head>
+<body>
+<form th:action="@{/summary2}" method="post">
+    <div class="form-inline">
+        <input class="datepicker" name="dayBefore" autocomplete="off">
+        <p>から</p>
+        <input class="datepicker" name="dayAfter" autocomplete="off">
+        <p>まで</p>
+    </div>
+    <button type="submit">送信</button>
+</form>
+<div>
+    <p th:text="${test}"></p>
+</div>
+</body>
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: 'ja'
+    });
+    $('.datepicker').datepicker("setDate", new Date());
+</script>
+</html>
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Summary</title>-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>-->
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>-->
+<!--    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css">-->
+
+<!--    <script>-->
+<!--      $(function() {-->
+<!--        $("#datepicker").datepicker();-->
+<!--      });-->
+<!--    </script>-->
+
+<!--</head>-->
+<!--<body>-->
+
+<!--<form th:action="@{/top}" method="get">-->
+<!--    <input type="submit" value="sousin">-->
+<!--</form>-->
+
+<!--<form th:action="@{/summary2}" method="post">-->
+<!--&lt;!&ndash;    <input type="text" id="datepicker" value="a"></form>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button type="submit">検索</button>&ndash;&gt;-->
+<!--    <input type="submit" value="sousin" formmethod="post" class ="btn btn-primary">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

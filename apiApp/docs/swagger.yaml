@@ -1,0 +1,241 @@
+swagger: "2.0"
+info:
+  description: "商品データの登録・検索・変更・削除を行うAPIです。"
+  version: "1.0.0"
+  title: "Restful Item API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "nomurashunta@team-lab.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+paths:
+  /api/items/{id}:
+    get:
+      summary: "商品データ詳細取得API"
+      description: "指定されたIDをもつ商品データを返します。"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "編集したい商品のIDです。"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "成功時のレスポンスです。"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "200"
+              messsage: 
+                type: "string"
+                example: "id:item0001の商品です"
+              item:
+                $ref: '#/definitions/item'
+        404:
+          description: "指定されたIDの商品データが存在しないときのレスポンスです。"
+          schema:
+            $ref: '#/definitions/404_error'
+    put:
+      summary: "商品データ編集API"
+      description: "指定されたIDを持つ商品データを編集します。"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "取得したい商品のIDです。"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Json形式の商品データです。imgフィールドにはBase64エンコードされた画像の文字列を入力します。"
+        required: true
+        schema:
+          $ref: '#/definitions/item_body_data'
+      responses:
+        200:
+          description: "正常なレスポンスです。"
+        404:
+          description: "指定されたIDの商品データが存在しないときのレスポンスです。"
+        400:
+          description: "商品データの値に不正がある場合のレスポンスです。"
+          
+    delete:
+      summary: "商品データ削除API"
+      description: "指定されたIDを持つ商品データを削除します。"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "削除したい商品のIDです。"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "正常なレスポンスです。"
+        404:
+          description: "指定されたIDの商品データが存在しないときのレスポンスです。"
+        400:
+          description: "商品データの値に不正がある場合のレスポンスです。"
+          
+  
+  /api/items:
+    get:
+      summary: "商品データ一覧取得API"
+      description: "リクエストパラメータを指定することで、条件に一致するデータの一覧を取得します。"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "商品IDを指定します。"
+        type: "string"
+      - name: "title"
+        in: "query"
+        description: "商品タイトルを指定します。部分一致で検索されます。"
+        type: "string"
+      - name: "description"
+        in: "query"
+        description: "商品タイトルを指定します。部分一致で検索されます。"
+        type: "string"
+      - name: "maxPrice"
+        in: "query"
+        description: "商品価格の上限を指定します。"
+        type: "integer"
+      - name: "minPrice"
+        in: "query"
+        description: "商品価格の下限を指定します。"
+        type: "integer"
+      #https://stackoverflow.com/questions/45445862/swagger-ui-multiple-anonymous-objects-in-array
+      responses:
+        200:
+          description: "成功時のレスポンスです。"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "200"
+              messsage: 
+                type: "string"
+                example: "2個の商品が見つかりました"
+              items:
+                type: array
+                items:
+                  $ref: '#/definitions/item'
+                example:                   
+                  - id: item0002       
+                    imgURI: api/items/item0002/image       
+                    title: tacos     
+                    description: This is a tacos.         
+                    price: 2000 
+                  - id: item0003       
+                    imgURI: /api/items/item0003/image       
+                    title: tiramisu     
+                    description: This is a tiramisu.         
+                    price: 2000 
+        400:
+          description: "リクエストパラメータに不正がある場合のレスポンスです。"
+          
+    post:
+      summary: "商品データ登録API"
+      description: "商品データを新規に登録します。"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Json形式の商品データです。imgフィールドにはBase64エンコードされた画像の文字列を入力します。"
+          required: true
+          schema:
+            $ref: '#/definitions/item_body_data'
+      responses:
+        200:
+          description: "正常なレスポンスです。"
+        400:
+          description: "商品データの値に不正がある場合のレスポンスです。"
+    
+                    
+                        
+definitions:
+
+
+  404_error:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "404"
+      messsage: 
+        type: "string"
+        example: "指定されたIDの商品は存在しません"
+  
+  400_error:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "400"
+      messsage: 
+        type: "string"
+        example: "商品データが不正です"
+        
+  500_error:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "500"
+      messsage: 
+        type: "string"
+        example: "商品の追加に失敗しました"
+  
+  successful_result:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "200"
+      messsage: 
+        type: "string"
+        example: ""
+      id:
+        type: "string"
+        example: "item0001"
+  
+  item_body_data:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "item0005"
+      img:
+        type: "string"
+        example: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAA..."
+      title:
+        type: "string"
+        example: "pizza"
+      description:
+        type: "string"
+        example: "This is a pizza."
+      price:
+        type: "integer"
+        example: 3000
+
+  item:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "item0001"
+      imgURI:
+        type: "string"
+        example: "/api/items/item0001/image"
+      title:
+        type: "string"
+        example: "sushi"
+      description:
+        type: "string"
+        example: "These are sushi."
+      price:
+        type: "integer"
+        example: 5000
+
+
+

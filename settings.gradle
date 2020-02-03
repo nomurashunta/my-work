@@ -1,0 +1,5 @@
+rootProject.name = 'my_works'
+include 'Task1'
+include 'Task2'
+include 'common'
+

@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS item (
+ id VARCHAR(50) NOT NULL PRIMARY KEY,
+ img MEDIUMBLOB,
+ title VARCHAR(100),
+ description VARCHAR(500),
+ price INT
+);
+CREATE TABLE IF NOT EXISTS log (
+ id VARCHAR(50) NOT NULL PRIMARY KEY,
+ img MEDIUMBLOB,
+ title VARCHAR(100),
+ description VARCHAR(500),
+ price INT,
+ status ENUM ('ADD', 'DELETE'),
+ datetime DATETIME
+);
